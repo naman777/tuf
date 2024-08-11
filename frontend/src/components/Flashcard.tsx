@@ -50,7 +50,7 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
   const confirmDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/admin`,
+        `https://tuf-dd5r.onrender.com/api/admin`,
         {
           data: {
             id

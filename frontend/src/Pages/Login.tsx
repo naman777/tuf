@@ -10,7 +10,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/admin/login", {
+      const response = await axios.post("https://tuf-dd5r.onrender.com/api/admin/login", {
         username,
         password,
       });

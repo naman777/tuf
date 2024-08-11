@@ -9,7 +9,7 @@ const Home = () => {
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/user/");
+        const response = await axios.get("https://tuf-dd5r.onrender.com/api/user/");
         setFlashcards(response.data);
       } catch (error) {
         console.error(error);

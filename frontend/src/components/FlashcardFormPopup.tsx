@@ -15,7 +15,7 @@ const FlashcardFormPopup: React.FC<FlashcardFormPopupProps> = ({ onClose, onAddF
     e.preventDefault();
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/admin/',
+        'https://tuf-dd5r.onrender.com/api/admin/',
         { question, answer },
         {
           headers: {

@@ -13,7 +13,7 @@ const Admin = () => {
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/admin/", {
+        const response = await axios.get("https://tuf-dd5r.onrender.com/api/admin/", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
           }
