@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import Popup from '../components/Popup'; 
 import ConfirmPopup from '../components/ConfirmPopup'; 
+import { Spinner } from './Spinner';
 
 const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
   initialQuestion: string;
@@ -15,6 +16,7 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
   const [showPopup, setShowPopup] = useState(false); 
   const [showConfirm, setShowConfirm] = useState(false); 
   const [message, setMessage] = useState("");
+  const [loading,setLoading]=useState(false);
   
 
   const handleEdit = () => {
@@ -24,8 +26,9 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
   const handleSave = async () => {
     setIsEditing(false);
     try {
+        setLoading(true);
       const response = await axios.patch(
-        "http://localhost:3000/api/admin/",
+        "https://tuf-dd5r.onrender.com/api/admin/",
         {
           question,
           answer,
@@ -37,6 +40,7 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
           }
         }
       );
+        setLoading(false);
       setShowPopup(true); 
       setMessage(response.data.message);
     } catch (error) {
@@ -50,6 +54,7 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
 
   const confirmDelete = async () => {
     try {
+        setLoading(true);
       const response = await axios.delete(
         `https://tuf-dd5r.onrender.com/api/admin`,
         {
@@ -60,7 +65,9 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
           }
         }
+
       );
+        setLoading(false);
       setShowPopup(true); 
       setMessage(response.data.message);
       onDelete(id);
@@ -155,6 +162,10 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
           onCancel={cancelDelete} 
         />
       )}
+      {loading && <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90">
+                <div className="text-white"><Spinner/></div>
+            </div>
+        }
     </div>
   );
 };

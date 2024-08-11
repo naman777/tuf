@@ -1,6 +1,7 @@
 // components/FlashcardFormPopup.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Spinner } from './Spinner';
 
 interface FlashcardFormPopupProps {
   onClose: () => void;
@@ -10,10 +11,12 @@ interface FlashcardFormPopupProps {
 const FlashcardFormPopup: React.FC<FlashcardFormPopupProps> = ({ onClose, onAddFlashcard }) => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+  const [loading,setLoading]=useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+        setLoading(true);
       const response = await axios.post(
         'https://tuf-dd5r.onrender.com/api/admin/',
         { question, answer },
@@ -23,6 +26,7 @@ const FlashcardFormPopup: React.FC<FlashcardFormPopupProps> = ({ onClose, onAddF
           }
         }
       );
+        setLoading(false);
       onAddFlashcard(response.data.flashcard);
       onClose();
     } catch (error) {
@@ -78,6 +82,10 @@ const FlashcardFormPopup: React.FC<FlashcardFormPopupProps> = ({ onClose, onAddF
           </div>
         </form>
       </div>
+      {loading && <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90">
+                <div className="text-white"><Spinner/></div>
+            </div>
+        }
     </div>
   );
 };

@@ -25,7 +25,7 @@ const Admin = () => {
         setFlashCards(response.data);
       } catch (error) {
         console.error(error);
-        navigate("/login");
+        navigate("/admin/login");
       }
     };
     fetchCards();
