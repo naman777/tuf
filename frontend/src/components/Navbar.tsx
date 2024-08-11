@@ -13,7 +13,7 @@ const Navbar: React.FC<NavbarProps> = ({ handleAddFlashcard }) => {
         navigate('/');
     }
         return (
-    <nav className="bg-gray-800 text-white flex items-center justify-between p-4 shadow-md">
+    <nav className="bg-first text-white flex items-center justify-between p-4 shadow-md">
       <div className="text-xl font-bold">
         Admin Panel
       </div>

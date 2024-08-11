@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const Navbar: React.FC= () => {
     const navigate = useNavigate();
   return (
-    <nav className="bg-gray-800 text-white flex items-center justify-between p-4 shadow-md">
+    <nav className="bg-first text-white flex items-center justify-between p-4 shadow-md">
       <div className="text-xl font-bold">
         Take You Forward
       </div>

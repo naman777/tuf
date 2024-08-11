@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import "../css/flipcard.css"
 interface Flashcard {
   question: string;
   answer: string;
@@ -30,22 +30,22 @@ const FlashcardDisplay: React.FC<FlashcardDisplayProps> = ({ flashcards }) => {
   };
 
   if (flashcards.length === 0) {
-    return <div>No flashcards available.</div>;
+    return <div className='text-black font-extrabold text-2xl'></div>;
   }
 
   const { question, answer } = flashcards[currentIndex];
 
   return (
     <div className="flex flex-col items-center">
-      <div
-        className="w-80 h-60 flex items-center justify-center border border-gray-300 rounded-lg shadow-lg cursor-pointer bg-stone-300 mb-4"
-        onClick={handleFlip}
-      >
-        {flipped ? (
-          <div className="text-xl font-bold text-center">{answer}</div>
-        ) : (
-          <div className="text-xl font-bold text-center">{question}</div>
-        )}
+      <div className="flashcard-container mb-4" onClick={handleFlip}>
+        <div className={`flashcard ${flipped ? 'flipped' : ''}`}>
+          <div className="flashcard-content flashcard-front text-white font-extrabold text-2xl">
+            {question}
+          </div>
+          <div className="flashcard-content flashcard-back text-black font-extrabold text-2xl">
+            {answer}
+          </div>
+        </div>
       </div>
       <div className="flex justify-between w-full max-w-xs">
         <button

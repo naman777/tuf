@@ -7,7 +7,9 @@ function App() {
 
   return (
     <>
-       <Main>
+      <div className="bg-second">
+
+       <Main >
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/admin/login" element={<Login/>}/>
@@ -15,6 +17,7 @@ function App() {
          
         </Routes>
        </Main>
+      </div>
     </>
   )
 }

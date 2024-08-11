@@ -4,20 +4,24 @@ import Navbar from '../components/Navbar';
 import Flashcard from '../components/Flashcard';
 import FlashcardFormPopup from '../components/FlashcardFormPopup';
 import { useNavigate } from 'react-router-dom';
+import { Spinner } from '../components/Spinner';
 
 const Admin = () => {
   const [flashCards, setFlashCards] = useState<{ id: number, question: string, answer: string }[]>([]);
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
+  const [loading,setLoading]=useState(false);
 
   useEffect(() => {
     const fetchCards = async () => {
       try {
+        setLoading(true);
         const response = await axios.get("https://tuf-dd5r.onrender.com/api/admin/", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
           }
         });
+        setLoading(false);
         setFlashCards(response.data);
       } catch (error) {
         console.error(error);
@@ -44,7 +48,7 @@ const Admin = () => {
   };
 
   return (
-    <div className='overflow-x-hidden h-screen bg-gray-900'>
+    <div className='overflow-x-hidden h-screen bg-second'>
       <Navbar handleAddFlashcard={handleAddFlashcard} />
       <div className='grid grid-cols-3 gap-4 w-screen p-6'>
         {flashCards.map((flashcard) => (
@@ -62,6 +66,11 @@ const Admin = () => {
           onClose={handleClosePopup}
           onAddFlashcard={handleNewFlashcard}
         />
+      }
+      {
+        loading && <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90">
+          <div className="text-white"><Spinner/></div>
+        </div>
       }
     </div>
   );

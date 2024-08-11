@@ -15,6 +15,7 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
   const [showPopup, setShowPopup] = useState(false); 
   const [showConfirm, setShowConfirm] = useState(false); 
   const [message, setMessage] = useState("");
+  
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -84,11 +85,11 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
   };
 
   return (
-    <div className="bg-gray-800 shadow-lg rounded-lg p-6">
+    <div className="bg-first shadow-lg rounded-lg p-6">
       {isEditing ? (
         <div>
           <div className="">
-            <label htmlFor="question" className="block text-gray-900 font-bold mb-2">
+            <label htmlFor="question" className="block text-white font-bold mb-2">
               Question:
             </label>
             <input
@@ -100,7 +101,7 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="answer" className="block text-gray-700 font-bold mb-2">
+            <label htmlFor="answer" className="block text-white font-bold mb-2">
               Answer:
             </label>
             <input
