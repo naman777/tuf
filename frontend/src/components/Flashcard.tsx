@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import axios from 'axios';
 import Popup from '../components/Popup'; 
+import ConfirmPopup from '../components/ConfirmPopup'; 
 
 const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
   initialQuestion: string;
   initialAnswer: string;
   id: number;
-  onDelete: (id: number) => void; // Callback to handle deletion in parent component
+  onDelete: (id: number) => void;
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [question, setQuestion] = useState(initialQuestion);
   const [answer, setAnswer] = useState(initialAnswer);
   const [showPopup, setShowPopup] = useState(false); 
+  const [showConfirm, setShowConfirm] = useState(false); 
   const [message, setMessage] = useState("");
 
   const handleEdit = () => {
@@ -41,7 +43,11 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
     }
   };
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
+    setShowConfirm(true);
+  };
+
+  const confirmDelete = async () => {
     try {
       const response = await axios.delete(
         `http://localhost:3000/api/admin`,
@@ -57,10 +63,15 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
       setShowPopup(true); 
       setMessage(response.data.message);
       onDelete(id);
+      setShowConfirm(false);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
+
+  const cancelDelete = () => {
+    setShowConfirm(false);
+  };
 
   const handleCancel = () => {
     setIsEditing(false);
@@ -73,7 +84,7 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6">
+    <div className="bg-gray-800 shadow-lg rounded-lg p-6">
       {isEditing ? (
         <div>
           <div className="">
@@ -117,8 +128,8 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
         </div>
       ) : (
         <div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">{question}</h3>
-          <p className="text-gray-700 mb-4">{answer}</p>
+          <h3 className="text-xl font-bold text-white mb-2">{question}</h3>
+          <p className="text-white mb-4">{answer}</p>
           <div className="flex justify-between items-center">
             <button
               onClick={handleEdit}
@@ -136,6 +147,13 @@ const Flashcard = ({ initialQuestion, initialAnswer, id, onDelete }: {
         </div>
       )}
       {showPopup && <Popup message={message} onClose={closePopup} />}
+      {showConfirm && (
+        <ConfirmPopup 
+          message="Are you sure you want to delete this flashcard?" 
+          onConfirm={confirmDelete} 
+          onCancel={cancelDelete} 
+        />
+      )}
     </div>
   );
 };
