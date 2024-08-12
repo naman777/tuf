@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
+
 import "../css/flipcard.css"
+
+
 interface Flashcard {
   question: string;
   answer: string;
@@ -50,16 +55,21 @@ const FlashcardDisplay: React.FC<FlashcardDisplayProps> = ({ flashcards }) => {
       <div className="flex justify-between w-full max-w-xs">
         <button
           onClick={handlePrevious}
-          className="bg-blue-600 text-white px-2 py-1 rounded-lg hover:bg-blue-800 text-sm"
+          className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-800 text-sm flex items-center space-x-2 font-bold"
         >
+          <MdKeyboardDoubleArrowLeft />
           Previous
         </button>
-        <button
-          onClick={handleNext}
-          className="bg-blue-600 text-white px-2 py-1 rounded-lg hover:bg-blue-800 text-sm"
-        >
-          Next
-        </button>
+        <div className=''>
+
+          <button
+            onClick={handleNext}
+            className="bg-blue-600 text-white p-2.5 rounded-lg hover:bg-blue-800 text-sm flex items-center space-x-2 font-bold"
+            >
+            Next
+            <MdKeyboardDoubleArrowRight />
+          </button>
+          </div>
       </div>
     </div>
   );
